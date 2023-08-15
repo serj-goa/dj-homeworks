@@ -13,8 +13,25 @@ Content-Type: application/json
 
 ###
 
+# создание продукта
+POST {{baseUrl}}/products/
+Content-Type: application/json
+
+{
+  "title": "Огурец",
+  "description": "Лучшие огурцы на рынке"
+}
+
+###
+
 # получение продуктов
 GET {{baseUrl}}/products/
+Content-Type: application/json
+
+###
+
+# получение продуктов постранично
+GET {{baseUrl}}/stocks/?page=2
 Content-Type: application/json
 
 ###
@@ -63,8 +80,74 @@ Content-Type: application/json
 
 ###
 
+# создание склада
+POST {{baseUrl}}/stocks/
+Content-Type: application/json
+
+{
+  "address": "Планета Земля",
+  "positions": [
+    {
+      "product": 2,
+      "quantity": 150,
+      "price": 20.50
+    },
+    {
+      "product": 3,
+      "quantity": 110,
+      "price": 80
+    }
+  ]
+}
+
+###
+
+# создание склада
+POST {{baseUrl}}/stocks/
+Content-Type: application/json
+
+{
+  "address": "Пустыня Сахара",
+  "positions": [
+    {
+      "product": 2,
+      "quantity": 50,
+      "price": 21.20
+    },
+    {
+      "product": 3,
+      "quantity": 90,
+      "price": 30
+    }
+  ]
+}
+
+###
+
+# создание склада
+POST {{baseUrl}}/stocks/
+Content-Type: application/json
+
+{
+  "address": "Бермудские острова",
+  "positions": [
+    {
+      "product": 2,
+      "quantity": 35,
+      "price": 34.50
+    },
+    {
+      "product": 3,
+      "quantity": 50,
+      "price": 75
+    }
+  ]
+}
+
+###
+
 # обновляем записи на складе
-PATCH {{baseUrl}}/stocks/4/
+PATCH {{baseUrl}}/stocks/5/
 Content-Type: application/json
 
 {
@@ -86,4 +169,22 @@ Content-Type: application/json
 
 # поиск складов, где есть определенный продукт
 GET {{baseUrl}}/stocks/?products=2
+Content-Type: application/json
+
+###
+
+# поиск складов, где есть определенный продукт
+GET {{baseUrl}}/stocks/5/
+Content-Type: application/json
+
+###
+
+# удаление продукта
+DELETE {{baseUrl}}/stocks/4/
+Content-Type: application/json
+
+###
+
+# поиск складов, где есть определенный продукт
+GET {{baseUrl}}/stocks/?search=Огурец
 Content-Type: application/json
