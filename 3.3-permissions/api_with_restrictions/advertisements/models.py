@@ -1,30 +1,39 @@
 from django.conf import settings
-from django.db import models
+from django.db import models as m
 
 
-class AdvertisementStatusChoices(models.TextChoices):
+class AdvertisementStatusChoices(m.TextChoices):
     """Статусы объявления."""
 
     OPEN = "OPEN", "Открыто"
     CLOSED = "CLOSED", "Закрыто"
+    DRAFT = "DRAFT", "Черновик"
 
 
-class Advertisement(models.Model):
+class Advertisement(m.Model):
     """Объявление."""
 
-    title = models.TextField()
-    description = models.TextField(default='')
-    status = models.TextField(
+    title = m.TextField()
+    description = m.TextField(default='')
+    status = m.TextField(
         choices=AdvertisementStatusChoices.choices,
         default=AdvertisementStatusChoices.OPEN
     )
-    creator = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-    )
-    created_at = models.DateTimeField(
-        auto_now_add=True
-    )
-    updated_at = models.DateTimeField(
-        auto_now=True
-    )
+    creator = m.ForeignKey(settings.AUTH_USER_MODEL, on_delete=m.CASCADE)
+    created_at = m.DateTimeField(auto_now_add=True)
+    updated_at = m.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = 'Объявление'
+        verbose_name_plural = 'Объявления'
+
+
+class Favorites(m.Model):
+    """ Избранное. """
+
+    user = m.ForeignKey(settings.AUTH_USER_MODEL, on_delete=m.CASCADE)
+    advertisement = m.ForeignKey(Advertisement, on_delete=m.CASCADE)
+
+    class Meta:
+        verbose_name = 'Избранное'
+        verbose_name_plural = 'Избранные'

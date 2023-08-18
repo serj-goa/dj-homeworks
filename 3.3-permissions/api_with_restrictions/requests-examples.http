@@ -1,17 +1,24 @@
 # примеры API-запросов
 
-@baseUrl = https://localhost:8000/api
+@baseUrl = http://localhost:8000/api
 
-# получение объявлений
+# получение объявлений анонимным пользователем
 GET {{baseUrl}}/advertisements/
 Content-Type: application/json
+
+###
+
+# получение объявлений авторизованным пользователем
+GET {{baseUrl}}/advertisements/
+Content-Type: application/json
+Authorization: Token f213cc8e4483c62f31189f673575890c3d83d73c
 
 ###
 
 # создание объявления
 POST {{baseUrl}}/advertisements/
 Content-Type: application/json
-Authorization: Token 902ef055a9ac93f18327f1f9c45ab059f1a62c7d
+Authorization: Token f213cc8e4483c62f31189f673575890c3d83d73c
 
 {
   "title": "Шкаф IKEA",
@@ -20,10 +27,34 @@ Authorization: Token 902ef055a9ac93f18327f1f9c45ab059f1a62c7d
 
 ###
 
-# попытка поменять объявление
-PATCH {{baseUrl}}/advertisements/1/
+# создание объявления
+POST {{baseUrl}}/advertisements/
 Content-Type: application/json
-Authorization: Token 902ef055a9ac93f18327f1f9c45ab059f1a62c7d
+Authorization: Token f213cc8e4483c62f31189f673575890c3d83d73c
+
+{
+  "title": "Письменный стол",
+  "description": "Срочно"
+}
+
+###
+
+# создание объявления
+POST {{baseUrl}}/advertisements/
+Content-Type: application/json
+Authorization: Token e4c1bf269bf4ac26d9ed7312d921a018e5058887
+
+{
+  "title": "Диван угловой",
+  "description": "Срочно"
+}
+
+###
+
+# попытка поменять объявление
+PATCH {{baseUrl}}/advertisements/2/
+Content-Type: application/json
+Authorization: Token f213cc8e4483c62f31189f673575890c3d83d73c
 
 {
   "status": "CLOSED"
@@ -31,12 +62,69 @@ Authorization: Token 902ef055a9ac93f18327f1f9c45ab059f1a62c7d
 
 ###
 
-# фильтрация по создателю
-GET {{baseUrl}}/advertisements/?creator=3
+# попытка поменять объявление
+PATCH {{baseUrl}}/advertisements/2/
 Content-Type: application/json
+Authorization: Token f213cc8e4483c62f31189f673575890c3d83d73c
+
+{
+  "title": "Письменный стол"
+}
+
+###
+
+# фильтрация по создателю
+GET {{baseUrl}}/advertisements/?creator=2
+Content-Type: application/json
+Authorization: Token f213cc8e4483c62f31189f673575890c3d83d73c
 
 ###
 
 # фильтрация по дате
-GET {{baseUrl}}/advertisements/?created_at_before=2020-10-01
+GET {{baseUrl}}/advertisements/?created_at_before=2023-10-01
 Content-Type: application/json
+
+###
+
+# фильтрация по статусу
+GET {{baseUrl}}/advertisements/?status=CLOSED
+Content-Type: application/json
+
+
+###
+
+# запрос на удаление
+DELETE {{baseUrl}}/advertisements/17/
+
+###
+
+# запрос на удаление
+DELETE {{baseUrl}}/advertisements/17/
+Authorization: Token e4c1bf269bf4ac26d9ed7312d921a018e5058887
+
+###
+
+# добавить в избранное своё объявление
+GET {{baseUrl}}/advertisements/1/favorites/
+Content-Type: application/json
+Authorization: Token f213cc8e4483c62f31189f673575890c3d83d73c
+
+###
+
+# добавить в избранное своё объявление
+GET {{baseUrl}}/advertisements/2/favorites/
+Content-Type: application/json
+Authorization: Token e4c1bf269bf4ac26d9ed7312d921a018e5058887
+
+###
+
+# удалить избранное
+DELETE {{baseUrl}}/advertisements/2/delete/
+Authorization: Token e4c1bf269bf4ac26d9ed7312d921a018e5058887
+
+###
+
+# получить список избранных объявлений
+GET {{baseUrl}}/advertisements/favorites_posts/
+Content-Type: application/json
+Authorization: Token e4c1bf269bf4ac26d9ed7312d921a018e5058887
