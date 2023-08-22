@@ -8,14 +8,14 @@ Content-Type: application/json
 
 ###
 
-# получение объявлений авторизованным пользователем
+# admin - получение объявлений авторизованным пользователем
 GET {{baseUrl}}/advertisements/
 Content-Type: application/json
 Authorization: Token f213cc8e4483c62f31189f673575890c3d83d73c
 
 ###
 
-# создание объявления
+# admin - создание объявления
 POST {{baseUrl}}/advertisements/
 Content-Type: application/json
 Authorization: Token f213cc8e4483c62f31189f673575890c3d83d73c
@@ -27,7 +27,7 @@ Authorization: Token f213cc8e4483c62f31189f673575890c3d83d73c
 
 ###
 
-# создание объявления
+# admnin - создание объявления
 POST {{baseUrl}}/advertisements/
 Content-Type: application/json
 Authorization: Token f213cc8e4483c62f31189f673575890c3d83d73c
@@ -39,7 +39,7 @@ Authorization: Token f213cc8e4483c62f31189f673575890c3d83d73c
 
 ###
 
-# создание объявления
+# admin2 - создание объявления
 POST {{baseUrl}}/advertisements/
 Content-Type: application/json
 Authorization: Token e4c1bf269bf4ac26d9ed7312d921a018e5058887
@@ -51,7 +51,7 @@ Authorization: Token e4c1bf269bf4ac26d9ed7312d921a018e5058887
 
 ###
 
-# попытка поменять объявление
+# admin - попытка поменять объявление
 PATCH {{baseUrl}}/advertisements/2/
 Content-Type: application/json
 Authorization: Token f213cc8e4483c62f31189f673575890c3d83d73c
@@ -62,7 +62,7 @@ Authorization: Token f213cc8e4483c62f31189f673575890c3d83d73c
 
 ###
 
-# попытка поменять объявление
+# admin - попытка поменять объявление
 PATCH {{baseUrl}}/advertisements/2/
 Content-Type: application/json
 Authorization: Token f213cc8e4483c62f31189f673575890c3d83d73c
@@ -73,7 +73,7 @@ Authorization: Token f213cc8e4483c62f31189f673575890c3d83d73c
 
 ###
 
-# фильтрация по создателю
+# admin - фильтрация по создателю
 GET {{baseUrl}}/advertisements/?creator=2
 Content-Type: application/json
 Authorization: Token f213cc8e4483c62f31189f673575890c3d83d73c
@@ -98,33 +98,47 @@ DELETE {{baseUrl}}/advertisements/17/
 
 ###
 
-# запрос на удаление
+# admin2 - запрос на удаление
 DELETE {{baseUrl}}/advertisements/17/
 Authorization: Token e4c1bf269bf4ac26d9ed7312d921a018e5058887
 
 ###
 
-# добавить в избранное своё объявление
+# admin - добавить в избранное СВОË объявление admin
 GET {{baseUrl}}/advertisements/1/favorites/
 Content-Type: application/json
 Authorization: Token f213cc8e4483c62f31189f673575890c3d83d73c
 
 ###
 
-# добавить в избранное своё объявление
-GET {{baseUrl}}/advertisements/2/favorites/
+# admin2 - добавить объявление в избранное
+GET {{baseUrl}}/advertisements/1/favorites/
 Content-Type: application/json
 Authorization: Token e4c1bf269bf4ac26d9ed7312d921a018e5058887
 
 ###
 
-# удалить избранное
-DELETE {{baseUrl}}/advertisements/2/delete/
+# admin2 - добавить в избранное СВОË объявление admin2
+GET {{baseUrl}}/advertisements/20/favorites/
+Content-Type: application/json
 Authorization: Token e4c1bf269bf4ac26d9ed7312d921a018e5058887
 
 ###
 
-# получить список избранных объявлений
+# admin2 - удалить избранное
+DELETE {{baseUrl}}/advertisements/1/delete/
+Authorization: Token e4c1bf269bf4ac26d9ed7312d921a018e5058887
+
+###
+
+# admin2 - получить список избранных объявлений admin2
 GET {{baseUrl}}/advertisements/favorites_posts/
 Content-Type: application/json
 Authorization: Token e4c1bf269bf4ac26d9ed7312d921a018e5058887
+
+###
+
+# admin - получить список избранных объявлений admin
+GET {{baseUrl}}/advertisements/favorites_posts/
+Content-Type: application/json
+Authorization: Token f213cc8e4483c62f31189f673575890c3d83d73c
