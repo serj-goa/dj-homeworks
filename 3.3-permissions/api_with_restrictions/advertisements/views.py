@@ -11,7 +11,7 @@ from rest_framework.viewsets import ModelViewSet
 
 from .filters import AdvertisementFilter
 from .models import Advertisement, Favorites
-from .permissions import IsOwnerOrReadOnly
+from .permissions import IsOwner, ReadOnly
 from .serializers import AdvertisementSerializer, FavoriteSerializer
 
 
@@ -31,7 +31,7 @@ class AdvertisementViewSet(ModelViewSet):
         """Получение прав для действий."""
 
         if self.action in ["create", "update", "partial_update", "destroy"]:
-            return [IsAuthenticated(), IsOwnerOrReadOnly()]
+            return [IsAuthenticated(), IsOwner(), ReadOnly()]
 
         return []
 
@@ -57,7 +57,7 @@ class AdvertisementViewSet(ModelViewSet):
 
             except ValidationError as err:
                 print(err)
-                return Response('Своё объявление нельзя добавлять в избранное!', status=HTTP_403_FORBIDDEN)
+                return Response(err, status=HTTP_403_FORBIDDEN)
 
             serializer.create(validated_data)
 
@@ -67,7 +67,7 @@ class AdvertisementViewSet(ModelViewSet):
         detail=True,
         methods=['DELETE', ],
         url_path='delete',
-        permission_classes=[IsAuthenticated(), IsOwnerOrReadOnly(), ]
+        permission_classes=[IsAuthenticated(), IsOwner(), ]
     )
     def delete_favorites_posts(self, request, pk):
         Favorites.objects.get(advertisement__id=pk, user=request.user).delete()
