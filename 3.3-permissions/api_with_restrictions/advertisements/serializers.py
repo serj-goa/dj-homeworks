@@ -37,9 +37,9 @@ class AdvertisementSerializer(s.ModelSerializer):
             creator=self.context['request'].user,
             status='OPEN'
         ).count()
-        # status = data.get('status')
+        status = data.get('status')
 
-        if advs >= 10 and self.context['request'].method == 'POST':
+        if (advs >= 10 and self.context['request'].method == 'POST') or status == 'OPEN':
             raise s.ValidationError('Максимальное число открытых объявлений: 10')
 
         return data
@@ -53,10 +53,10 @@ class FavoriteSerializer(s.ModelSerializer):
         fields = ['id', 'advertisement', ]
 
     def validate(self, data):
-        if Advertisement.objects.get(id=data['advertisement'].id).creator == data['user']:
-            raise ValidationError('Своё объявление нельзя добавлять в избранное!')
-
-        if Favorites.objects.filter(advertisement=data['advertisement'], user=data['user']):
+        if Favorites.objects.filter(advertisement=data['advertisement'], user=data['user']).exists():
             raise ValidationError('Это объявление уже есть в избранном')
+
+        elif Advertisement.objects.get(id=data['advertisement'].id).creator == data['user']:
+            raise ValidationError('Своё объявление нельзя добавлять в избранное!')
 
         return data
